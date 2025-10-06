@@ -22,9 +22,11 @@ int main() {
     }
 
     cout << fixed << setprecision(10);
-    cout << "Iter\t       a\t       b\t     f(a)\t     f(b)\t       c\t     f(c)\tCriterio" << endl;
+    
 
+    cout << "Iter\t       a\t\t       b\t\t     f(a)\t\t     f(b)\t\t       c\t\t     f(c)\t\t Criterio" << endl;
     while (true) {
+        
         c = (a + b) / 2.0;
 
         // Evaluamos criterios de parada

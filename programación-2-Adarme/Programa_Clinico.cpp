@@ -1,23 +1,33 @@
 #include <iostream>
+#include <conio.h>
 #include <stdlib.h>
 
 using namespace std;  
 
 main (){
+    
+int *Calf, NumCalif;
 
-int numero, *dir_numero;
+cout<<"Ingrese un numero de calificaciones: ";
+cin>>NumCalif;
 
-cout<<"Digite un numero: ";
-cin>>numero;
+Calf= new int [NumCalif];
 
-dir_numero=&numero;
-
-if(*dir_numero%2==0){
-    cout<< "El numero es par"<<*dir_numero<<endl;
-    cout<< "La direccion del numero par es: "<<dir_numero<<endl;
-}else{
-    cout << "El numero es impar "<<*dir_numero<<endl;
-    cout << "la dirección del numero impar es: "<<dir_numero<<endl;
+for (int i=0; i<NumCalif; i++) {
+    cout <<"Ingrese la Calificacion #" << (i+1) << "= ";
+    cin >> Calf[i];
 }
+
+cout<<"\n\nLAS CALIFICACIONES SON: \n"<<endl;
+cout<<"=========================\n"<<endl;
+
+for (int i=0; i<NumCalif; i++) {
+    cout<<"Calificacion #"<< (i+1) <<"= "<<Calf[i]<<"\n"<<endl;
+}
+
+delete [] Calf; 
+
+getch();
+return 0;
 
 }

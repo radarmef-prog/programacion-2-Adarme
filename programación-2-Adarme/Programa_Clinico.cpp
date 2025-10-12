@@ -85,8 +85,6 @@ void redimensionarArrayPacientes(Hospital* hospital) {
     delete[] hospital->pacientes;
     hospital->pacientes = nuevoArray;
     hospital->capacidadPacientes = nuevaCapacidad;
-
-    cout << "🔄 Capacidad de pacientes duplicada a " << nuevaCapacidad << endl;
 }
 
 //========================================================================================================================================================================
@@ -180,7 +178,7 @@ void INGRESO_NUEVOS_PACIENTES(Hospital* hospital) {
 
         hospital->cantidadPacientes++;
 
-        cout << "\n√ Paciente registrado con exito. ID asignado: 00000" << p.id << endl;
+        cout << "\n√ Paciente registrado con exito. ID asignado:" << p.id << endl;
 
         cout << "\n¿Desea agregar otro paciente? (S/N): ";
         cin >> wAgregarMas;
@@ -252,7 +250,6 @@ int main() {
             cout << "¡ERROR!: Opcion invalida (1-4)" << endl;
             system("pause");
             break;
-            return 1;
     }
     }while(wOpcionIMP != 4);
 

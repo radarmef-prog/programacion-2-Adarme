@@ -1,9 +1,12 @@
  /*Programa Clinico de control 
 Desarrollado por Rubén Adarme 32.453.470*/
+
+
 #include <iostream>
 #include <cstring>
 #include <ctime>
 #include <iomanip>
+#include <windows.h>
 
 using namespace std;
 
@@ -48,16 +51,46 @@ struct Paciente {
     bool activo;
 };
 
+struct Doctor {
+    int id;
+    char nombre[50];
+    char apellido[50];
+    char cedula[20];
+    char especialidad[50];
+    int aniosExperiencia;
+    float costoConsulta;
+    char horarioAtencion[50];
+    char telefono[15];
+    char email[50];
+
+    int* pacientesAsignados;
+    int cantidadPacientes;
+    int capacidadPacientes;
+
+    int* citasAgendadas;
+    int cantidadCitas;
+    int capacidadCitas;
+
+    bool disponible;
+};
+
 struct Hospital {
+
     char nombre[100];
     Paciente* pacientes;
     int cantidadPacientes;
     int capacidadPacientes;
     int siguienteIdPaciente;
+
+    Doctor* doctores;
+    int cantidadDoctores;
+    int capacidadDoctores;
+    int siguienteIdDoctor;
+
 };
 
 //========================================================================================================================================================================
-//================================================== FUNCION PARA INICIAR HOSPITALÑ ======================================================================================  
+//================================================== FUNCION PARA INICIAR HOSPITAL =======================================================================================  
 //========================================================================================================================================================================
 
 Hospital* inicializarHospital(const char* nombre, int capacidadInicial) {
@@ -67,11 +100,17 @@ Hospital* inicializarHospital(const char* nombre, int capacidadInicial) {
     h->cantidadPacientes = 0;
     h->capacidadPacientes = capacidadInicial;
     h->siguienteIdPaciente = 1;
+
+    h->doctores = new Doctor[capacidadInicial];
+    h->cantidadDoctores = 0;
+    h->capacidadDoctores = capacidadInicial;
+    h->siguienteIdDoctor = 1;
     return h;
+
 }
 
 //========================================================================================================================================================================
-//================================================ FUNCION PARA REDIMENSIONAR ARRAY ======================================================================================
+//================================================ FUNCION PARA REDIMENSIONAR ARRAY DE PACIENTES =========================================================================
 //========================================================================================================================================================================
 
 void redimensionarArrayPacientes(Hospital* hospital) {
@@ -88,6 +127,26 @@ void redimensionarArrayPacientes(Hospital* hospital) {
 }
 
 //========================================================================================================================================================================
+//================================================ FUNCION PARA REDIMENSIONAR ARRAY DE DOCTORES ==========================================================================
+//========================================================================================================================================================================
+
+void redimensionarArrayDoctores(Hospital* hospital) {
+    int nuevaCapacidad = hospital->capacidadDoctores * 2;
+    Doctor* nuevoArray = new Doctor[nuevaCapacidad];
+
+    for (int i = 0; i < hospital->cantidadDoctores; i++) {
+        nuevoArray[i] = hospital->doctores[i];
+    }
+
+    delete[] hospital->doctores;
+    hospital->doctores = nuevoArray;
+    hospital->capacidadDoctores = nuevaCapacidad;
+
+    cout << "🔄 Capacidad de doctores duplicada a " << nuevaCapacidad << endl;
+}
+
+
+//========================================================================================================================================================================
 //================================================= FUNCION PARA VERIFICAR EL INGRESO DE CEDULAS REPETIDAS ===============================================================  
 //========================================================================================================================================================================
 
@@ -98,6 +157,15 @@ bool cedulaYaRegistrada(Hospital* hospital, const char* cedula) {
         }
     }
     return false; // Cédula no encontrada
+}
+
+bool cedulaDoctorYaRegistrada(Hospital* hospital, const char* cedula) {
+    for (int i = 0; i < hospital->cantidadDoctores; i++) {
+        if (strcmp(hospital->doctores[i].cedula, cedula) == 0) {
+            return true;
+        }
+    }
+    return false;
 }
 
 //========================================================================================================================================================================
@@ -187,6 +255,75 @@ void INGRESO_NUEVOS_PACIENTES(Hospital* hospital) {
 }
 
 //========================================================================================================================================================================
+//===================================================== FUNCION PARA INGRESAR NUEVO DOCTOR ===============================================================================  
+//========================================================================================================================================================================
+
+Doctor* INGRESO_NUEVO_DOCTOR(Hospital* hospital) {
+    if (hospital->cantidadDoctores >= hospital->capacidadDoctores) {
+        redimensionarArrayDoctores(hospital);
+    }
+
+    Doctor& d = hospital->doctores[hospital->cantidadDoctores];
+
+    d.id = hospital->siguienteIdDoctor++;
+
+    cout<<"\t\t╔════════════════════════════════════════╗"<<endl;
+    cout<<"\t\t║       INGRESO DE NUEVOS DOCTORES       ║"<<endl;
+    cout<<"\t\t╚════════════════════════════════════════╝"<<endl;
+
+    cout << "Nombre: ";
+    cin.ignore();
+    cin.getline(d.nombre, 50);
+
+    cout << "Apellido: ";
+    cin.getline(d.apellido, 50);
+
+    do {
+        cout << "Cedula profesional: ";
+        cin.getline(d.cedula, 20);
+        if (cedulaDoctorYaRegistrada(hospital, d.cedula)) {
+            cout << " Cédula ya registrada. Intente con otra.\n";
+        }
+    } while (cedulaDoctorYaRegistrada(hospital, d.cedula));
+
+    cout << "Especialidad medica: ";
+    cin.getline(d.especialidad, 50);
+
+    cout << "Anios de experiencia: ";
+    cin >> d.aniosExperiencia;
+
+    cout << "Costo de consulta: ";
+    cin >> d.costoConsulta;
+
+    cout << "Horario de atención (ej: Lun-Vie 8:00-16:00): ";
+    cin.ignore();
+    cin.getline(d.horarioAtencion, 50);
+
+    cout << "Teléfono: ";
+    cin.getline(d.telefono, 15);
+
+    cout << "Email: ";
+    cin.getline(d.email, 50);
+
+    // Inicializar arrays dinámicos
+    d.capacidadPacientes = 5;
+    d.cantidadPacientes = 0;
+    d.pacientesAsignados = new int[d.capacidadPacientes];
+
+    d.capacidadCitas = 10;
+    d.cantidadCitas = 0;
+    d.citasAgendadas = new int[d.capacidadCitas];
+
+    d.disponible = true;
+
+    hospital->cantidadDoctores++;
+
+    cout << "\n Doctor registrado con éxito. ID asignado: " << d.id << endl;
+
+    return &d;
+}
+
+//========================================================================================================================================================================
 //============================================ FUNCION PARA DESTRUIR HOSPITAL Y LIBERAR ESPACIO ========================================================================== 
 //========================================================================================================================================================================
 
@@ -196,6 +333,14 @@ void destruirHospital(Hospital* hospital) {
         delete[] hospital->pacientes[i].citasAgendadas;
     }
     delete[] hospital->pacientes;
+    
+
+    for (int i = 0; i < hospital->cantidadDoctores; i++) {
+    delete[] hospital->doctores[i].pacientesAsignados;
+    delete[] hospital->doctores[i].citasAgendadas;
+    }
+
+    delete[] hospital->doctores;
     delete hospital;
 }
 
@@ -205,6 +350,9 @@ void destruirHospital(Hospital* hospital) {
 
 int main() {
     int wOpcionIMP;
+    int wOpcionMP;
+    int wOpcionMAC;
+    int wOpcionMD;
     Hospital* hospital = inicializarHospital("Hospital Central", 8);
     
 
@@ -235,13 +383,164 @@ int main() {
     do{
     switch(wOpcionIMP){
         case 1:
-            INGRESO_NUEVOS_PACIENTES(hospital);
+            cout<<"\t\t╔════════════════════════════════════════╗"<<endl;
+            cout<<"\t\t║           GESTION DE PACIENTES         ║"<<endl;
+            cout<<"\t\t╠════════════════════════════════════════╣"<<endl;
+            cout<<"\t\t║          SELECCIONE UNA OPCION         ║"<<endl;
+            cout<<"\t\t╠════════════════════════════════════════╣"<<endl;
+            cout<<"\t\t║  1. Ingresar nuevo paciente            ║"<<endl;
+            cout<<"\t\t║  2. Buscar paciente por C.I            ║"<<endl;
+            cout<<"\t\t║  3. Buscar paciente por nombre         ║"<<endl;
+            cout<<"\t\t║  4. Ver historial medico completo      ║"<<endl;
+            cout<<"\t\t║  5. Actualizar datos del paciente      ║"<<endl;
+            cout<<"\t\t║  6. Ver lista de paciente clinica      ║"<<endl;       
+            cout<<"\t\t║  7. Eliminar paciente                  ║"<<endl;
+            cout<<"\t\t║  0. Volver a menu principal            ║"<<endl;
+            cout<<"\t\t╚════════════════════════════════════════╝"<<endl;
+
+                cin>>wOpcionMP;
+                do{
+                switch(wOpcionMP){
+                    system("cls");
+                    case 1:
+                        INGRESO_NUEVOS_PACIENTES(hospital);
+                        system("cls");
+                        break;
+                    case 2:
+                        cout << "Funcionalidad de busqueda por C.I en desarrollo." << endl;
+                        break;
+                    case 3:
+                        cout << "Funcionalidad de busqueda por nombre en desarrollo." << endl;
+                        break;
+                    case 4:
+                        cout << "Funcionalidad de ver historial medico completo en desarrollo." << endl;
+                        break;
+                    case 5:
+                        cout << "Funcionalidad de actualizar datos del paciente en desarrollo." << endl;
+                        break;
+                    case 6:
+                        cout << "Funcionalidad de ver lista de pacientes en desarrollo." << endl;
+                        break;
+                    case 7:
+                        cout << "Funcionalidad de eliminar paciente en desarrollo." << endl;
+                        break;
+                    case 0:
+                        cout << "Volviendo al menu principal..." << endl;
+                        break;
+                    default:
+                        cout << "¡ERROR!: Opcion invalida (0-7)" << endl;
+                        system("pause");
+                        break;
+                }
+                }while (wOpcionMP != 0);
             break;
+
         case 2:
-            cout << "Funcionalidad de gestion de doctores en desarrollo." << endl;
-            break;
+            cout<<"\t\t╔═══════════════════════════════════════════════╗"<<endl;
+            cout<<"\t\t║              GESTION DE DOCTORES              ║"<<endl;
+            cout<<"\t\t╠═══════════════════════════════════════════════╣"<<endl; 
+            cout<<"\t\t║             SELECCIONE UNA OPCION             ║"<<endl;
+            cout<<"\t\t╠═══════════════════════════════════════════════╣"<<endl;
+            cout<<"\t\t║  1. Ingresar nuevo doctor                     ║"<<endl;
+            cout<<"\t\t║  2. Buscar doctor por ID                      ║"<<endl;
+            cout<<"\t\t║  3. Buscar doctor por especialidad            ║"<<endl;
+            cout<<"\t\t║  4. Asignar paciente a doctor                 ║"<<endl; 
+            cout<<"\t\t║  5. Remover paciente de doctor                ║"<<endl;
+            cout<<"\t\t║  6. Lista de pacientes asignados a doctor     ║"<<endl;       
+            cout<<"\t\t║  7. Ver lista de doctores clinica             ║"<<endl;
+            cout<<"\t\t║  8. Elimir doctor                             ║"<<endl;
+            cout<<"\t\t║  0. Volver al menu principal                  ║"<<endl;
+            cout<<"\t\t╚═══════════════════════════════════════════════╝"<<endl;
+
+                cin>>wOpcionMD;
+                do{
+                switch(wOpcionMD){
+                    system("cls");
+                    case 1: 
+                        INGRESO_NUEVO_DOCTOR(hospital);
+                        break;
+                    case 2:
+                        cout << "Funcionalidad de busqueda de doctor por ID en desarrollo." << endl;
+                        break;
+                    case 3:
+                        cout << "Funcionalidad de busqueda de doctor por especialidad en desarrollo." << endl;
+                        break;
+                    case 4:
+                        cout << "Funcionalidad de asignar paciente a doctor en desarrollo." << endl;
+                        break;
+                    case 5:
+                        cout << "Funcionalidad de remover paciente de doctor en desarrollo." << endl;
+                        break;
+                    case 6:
+                        cout << "Funcionalidad de ver lista de pacientes asignados a doctor en desarrollo." << endl;
+                        break;
+                    case 7:
+                        cout << "Funcionalidad de ver lista de doctores en desarrollo." << endl;
+                        break;
+                    case 8:
+                        cout << "Funcionalidad de eliminar doctor en desarrollo." << endl;
+                        break;
+                    case 0:
+                        cout << "Volviendo al menu principal..." << endl;
+                        break;
+                    default:
+                        cout << "¡ERROR!: Opcion invalida (0-8)" << endl;
+                        system("pause");
+                        break;
+                    }
+                }while (wOpcionMD != 0);
+                break;
         case 3:
-            cout << "Funcionalidad de gestion de citas en desarrollo." << endl;
+            system("cls");
+            cout<<"\t\t╔════════════════════════════════════════╗"<<endl;
+            cout<<"\t\t║            GESTION DE CITAS            ║"<<endl;
+            cout<<"\t\t╠════════════════════════════════════════╣"<<endl;
+            cout<<"\t\t║          SELECCIONE UNA OPCION         ║"<<endl;
+            cout<<"\t\t╠════════════════════════════════════════╣"<<endl;
+            cout<<"\t\t║  1. Agendar nueva cita                 ║"<<endl;
+            cout<<"\t\t║  2. Suspender cita                     ║"<<endl;
+            cout<<"\t\t║  3. Atender cita                       ║"<<endl;
+            cout<<"\t\t║  4. Ver citas de un pacientes          ║"<<endl;
+            cout<<"\t\t║  5. Ver citas de un doctor             ║"<<endl;
+            cout<<"\t\t║  6. Ver citas de una fecha             ║"<<endl;       
+            cout<<"\t\t║  7. Ver listar citas pendientes        ║"<<endl;
+            cout<<"\t\t║  0. Volver al menu principal           ║"<<endl;
+            cout<<"\t\t╚════════════════════════════════════════╝"<<endl;
+
+                cin>>wOpcionMAC;
+                do{
+                switch(wOpcionMAC){
+                    system("cls");
+                    case 1:
+                        cout << "Funcionalidad de agendar nueva cita en desarrollo." << endl;
+                        break;
+                    case 2:
+                        cout << "Funcionalidad de suspender cita en desarrollo." << endl;
+                        break;
+                    case 3:
+                        cout << "Funcionalidad de atender cita en desarrollo." << endl;
+                        break;
+                    case 4:
+                        cout << "Funcionalidad de ver citas de un paciente en desarrollo." << endl;
+                        break;
+                    case 5:
+                        cout << "Funcionalidad de ver citas de un doctor en desarrollo." << endl;
+                        break;
+                    case 6:
+                        cout << "Funcionalidad de ver citas de una fecha en desarrollo." << endl;
+                        break;
+                    case 7:
+                        cout << "Funcionalidad de ver lista de citas pendientes en desarrollo." << endl;
+                        break;
+                    case 0:
+                        cout << "Volviendo al menu principal..." << endl;
+                        break;
+                    default: 
+                        cout << "¡ERROR!: Opcion invalida (0-7)" << endl;
+                        system("pause");
+                        break;
+                    }
+                }while (wOpcionMAC != 0);
             break;
         case 4:
             cout << "Saliendo del programa. ¡Hasta luego!" << endl;

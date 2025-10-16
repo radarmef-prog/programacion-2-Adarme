@@ -141,8 +141,6 @@ void redimensionarArrayDoctores(Hospital* hospital) {
     delete[] hospital->doctores;
     hospital->doctores = nuevoArray;
     hospital->capacidadDoctores = nuevaCapacidad;
-
-    cout << "🔄 Capacidad de doctores duplicada a " << nuevaCapacidad << endl;
 }
 
 
@@ -355,7 +353,8 @@ int main() {
     int wOpcionMD;
     Hospital* hospital = inicializarHospital("Hospital Central", 8);
     
-
+    do{
+    system("cls");
     cout<<"\t\t╔════════════════════════════════════════╗"<<endl;
     cout<<"\t\t║            HOSPITAL CENTRAL            ║"<<endl;
     cout<<"\t\t╠════════════════════════════════════════╣"<<endl;
@@ -380,9 +379,14 @@ int main() {
 
     cin>>wOpcionIMP;
   
-    do{
+    system("cls");  
     switch(wOpcionIMP){
+
+        
         case 1:
+            
+            do{
+            system("cls");
             cout<<"\t\t╔════════════════════════════════════════╗"<<endl;
             cout<<"\t\t║           GESTION DE PACIENTES         ║"<<endl;
             cout<<"\t\t╠════════════════════════════════════════╣"<<endl;
@@ -399,157 +403,189 @@ int main() {
             cout<<"\t\t╚════════════════════════════════════════╝"<<endl;
 
                 cin>>wOpcionMP;
-                do{
-                switch(wOpcionMP){
+                
                     system("cls");
-                    case 1:
-                        INGRESO_NUEVOS_PACIENTES(hospital);
-                        system("cls");
-                        break;
-                    case 2:
-                        cout << "Funcionalidad de busqueda por C.I en desarrollo." << endl;
-                        break;
-                    case 3:
-                        cout << "Funcionalidad de busqueda por nombre en desarrollo." << endl;
-                        break;
-                    case 4:
-                        cout << "Funcionalidad de ver historial medico completo en desarrollo." << endl;
-                        break;
-                    case 5:
-                        cout << "Funcionalidad de actualizar datos del paciente en desarrollo." << endl;
-                        break;
-                    case 6:
-                        cout << "Funcionalidad de ver lista de pacientes en desarrollo." << endl;
-                        break;
-                    case 7:
-                        cout << "Funcionalidad de eliminar paciente en desarrollo." << endl;
-                        break;
-                    case 0:
-                        cout << "Volviendo al menu principal..." << endl;
-                        break;
-                    default:
-                        cout << "¡ERROR!: Opcion invalida (0-7)" << endl;
-                        system("pause");
-                        break;
+                        switch(wOpcionMP){
+                            case 1:
+                                INGRESO_NUEVOS_PACIENTES(hospital);
+                                system("pause");
+                                break;
+                            case 2:
+                                cout << "Funcionalidad de busqueda por C.I en desarrollo." << endl;
+                                system("pause");
+                                break;
+                            case 3:
+                                cout << "Funcionalidad de busqueda por nombre en desarrollo." << endl;
+                                system("pause");
+                                break;
+                            case 4:
+                                cout << "Funcionalidad de ver historial medico completo en desarrollo." << endl;
+                                system("pause");
+                                break;
+                            case 5:
+                                cout << "Funcionalidad de actualizar datos del paciente en desarrollo." << endl;
+                                system("pause");
+                                break;
+                            case 6:
+                                cout << "Funcionalidad de ver lista de pacientes en desarrollo." << endl;
+                                system("pause");
+                                break;
+                            case 7:
+                                cout << "Funcionalidad de eliminar paciente en desarrollo." << endl;
+                                system("pause");
+                                break;
+                            case 0:
+                                cout << "Volviendo al menu principal..." << endl;
+                                system("pause");
+                                break;
+                            default:
+                                cout << "¡ERROR!: Opcion invalida (0-7)" << endl;
+                                system("pause");
+                                break;
                 }
-                }while (wOpcionMP != 0);
+            }while (wOpcionMP != 0);
             break;
 
         case 2:
-            cout<<"\t\t╔═══════════════════════════════════════════════╗"<<endl;
-            cout<<"\t\t║              GESTION DE DOCTORES              ║"<<endl;
-            cout<<"\t\t╠═══════════════════════════════════════════════╣"<<endl; 
-            cout<<"\t\t║             SELECCIONE UNA OPCION             ║"<<endl;
-            cout<<"\t\t╠═══════════════════════════════════════════════╣"<<endl;
-            cout<<"\t\t║  1. Ingresar nuevo doctor                     ║"<<endl;
-            cout<<"\t\t║  2. Buscar doctor por ID                      ║"<<endl;
-            cout<<"\t\t║  3. Buscar doctor por especialidad            ║"<<endl;
-            cout<<"\t\t║  4. Asignar paciente a doctor                 ║"<<endl; 
-            cout<<"\t\t║  5. Remover paciente de doctor                ║"<<endl;
-            cout<<"\t\t║  6. Lista de pacientes asignados a doctor     ║"<<endl;       
-            cout<<"\t\t║  7. Ver lista de doctores clinica             ║"<<endl;
-            cout<<"\t\t║  8. Elimir doctor                             ║"<<endl;
-            cout<<"\t\t║  0. Volver al menu principal                  ║"<<endl;
-            cout<<"\t\t╚═══════════════════════════════════════════════╝"<<endl;
+            do{
+                 system("cls"); 
+                    cout<<"\t\t╔═══════════════════════════════════════════════╗"<<endl;
+                    cout<<"\t\t║              GESTION DE DOCTORES              ║"<<endl;
+                    cout<<"\t\t╠═══════════════════════════════════════════════╣"<<endl; 
+                    cout<<"\t\t║             SELECCIONE UNA OPCION             ║"<<endl;
+                    cout<<"\t\t╠═══════════════════════════════════════════════╣"<<endl;
+                    cout<<"\t\t║  1. Ingresar nuevo doctor                     ║"<<endl;
+                    cout<<"\t\t║  2. Buscar doctor por ID                      ║"<<endl;
+                    cout<<"\t\t║  3. Buscar doctor por especialidad            ║"<<endl;
+                    cout<<"\t\t║  4. Asignar paciente a doctor                 ║"<<endl; 
+                    cout<<"\t\t║  5. Remover paciente de doctor                ║"<<endl;
+                    cout<<"\t\t║  6. Lista de pacientes asignados a doctor     ║"<<endl;       
+                    cout<<"\t\t║  7. Ver lista de doctores clinica             ║"<<endl;
+                    cout<<"\t\t║  8. Eliminar doctor                           ║"<<endl;
+                    cout<<"\t\t║  0. Volver al menu principal                  ║"<<endl;
+                    cout<<"\t\t╚═══════════════════════════════════════════════╝"<<endl;
 
-                cin>>wOpcionMD;
-                do{
-                switch(wOpcionMD){
-                    system("cls");
-                    case 1: 
-                        INGRESO_NUEVO_DOCTOR(hospital);
-                        break;
-                    case 2:
-                        cout << "Funcionalidad de busqueda de doctor por ID en desarrollo." << endl;
-                        break;
-                    case 3:
-                        cout << "Funcionalidad de busqueda de doctor por especialidad en desarrollo." << endl;
-                        break;
-                    case 4:
-                        cout << "Funcionalidad de asignar paciente a doctor en desarrollo." << endl;
-                        break;
-                    case 5:
-                        cout << "Funcionalidad de remover paciente de doctor en desarrollo." << endl;
-                        break;
-                    case 6:
-                        cout << "Funcionalidad de ver lista de pacientes asignados a doctor en desarrollo." << endl;
-                        break;
-                    case 7:
-                        cout << "Funcionalidad de ver lista de doctores en desarrollo." << endl;
-                        break;
-                    case 8:
-                        cout << "Funcionalidad de eliminar doctor en desarrollo." << endl;
-                        break;
-                    case 0:
-                        cout << "Volviendo al menu principal..." << endl;
-                        break;
-                    default:
-                        cout << "¡ERROR!: Opcion invalida (0-8)" << endl;
-                        system("pause");
-                        break;
+                        cin>>wOpcionMD;
+                
+                             system("cls");
+                                 switch(wOpcionMD) {
+                                    case 1: 
+                                        INGRESO_NUEVO_DOCTOR(hospital);
+                                        system("pause");
+                                        break;
+                                    case 2:
+                                        cout << "Funcionalidad de busqueda de doctor por ID en desarrollo." << endl;
+                                        system("pause");
+                                        break;
+                                    case 3:
+                                        cout << "Funcionalidad de busqueda de doctor por especialidad en desarrollo." << endl;
+                                        system("pause");
+                                        break;
+                                    case 4:
+                                        cout << "Funcionalidad de asignar paciente a doctor en desarrollo." << endl;
+                                        system("pause");
+                                        break;
+                                    case 5:
+                                        cout << "Funcionalidad de remover paciente de doctor en desarrollo." << endl;
+                                        system("pause");
+                                        break;
+                                    case 6:
+                                        cout << "Funcionalidad de ver lista de pacientes asignados a doctor en desarrollo." << endl;
+                                        system("pause");
+                                        break;
+                                    case 7:
+                                        cout << "Funcionalidad de ver lista de doctores en desarrollo." << endl;
+                                        system("pause");
+                                        break;
+                                    case 8:
+                                        cout << "Funcionalidad de eliminar doctor en desarrollo." << endl;
+                                        system("pause");
+                                        break;
+                                    case 0:
+                                        cout << "Volviendo al menu principal..." << endl;
+                                        system("pause");
+                                        break;
+                                    default:
+                                        cout << "¡ERROR!: Opcion invalida (0-8)" << endl;
+                                        system("pause");
+                                        break;
+                    
                     }
-                }while (wOpcionMD != 0);
-                break;
-        case 3:
-            system("cls");
-            cout<<"\t\t╔════════════════════════════════════════╗"<<endl;
-            cout<<"\t\t║            GESTION DE CITAS            ║"<<endl;
-            cout<<"\t\t╠════════════════════════════════════════╣"<<endl;
-            cout<<"\t\t║          SELECCIONE UNA OPCION         ║"<<endl;
-            cout<<"\t\t╠════════════════════════════════════════╣"<<endl;
-            cout<<"\t\t║  1. Agendar nueva cita                 ║"<<endl;
-            cout<<"\t\t║  2. Suspender cita                     ║"<<endl;
-            cout<<"\t\t║  3. Atender cita                       ║"<<endl;
-            cout<<"\t\t║  4. Ver citas de un pacientes          ║"<<endl;
-            cout<<"\t\t║  5. Ver citas de un doctor             ║"<<endl;
-            cout<<"\t\t║  6. Ver citas de una fecha             ║"<<endl;       
-            cout<<"\t\t║  7. Ver listar citas pendientes        ║"<<endl;
-            cout<<"\t\t║  0. Volver al menu principal           ║"<<endl;
-            cout<<"\t\t╚════════════════════════════════════════╝"<<endl;
+            }while (wOpcionMD != 0);
+            break;
+       
+            
 
-                cin>>wOpcionMAC;
+            case 3:
                 do{
-                switch(wOpcionMAC){
                     system("cls");
-                    case 1:
-                        cout << "Funcionalidad de agendar nueva cita en desarrollo." << endl;
-                        break;
-                    case 2:
-                        cout << "Funcionalidad de suspender cita en desarrollo." << endl;
-                        break;
-                    case 3:
-                        cout << "Funcionalidad de atender cita en desarrollo." << endl;
-                        break;
-                    case 4:
-                        cout << "Funcionalidad de ver citas de un paciente en desarrollo." << endl;
-                        break;
-                    case 5:
-                        cout << "Funcionalidad de ver citas de un doctor en desarrollo." << endl;
-                        break;
-                    case 6:
-                        cout << "Funcionalidad de ver citas de una fecha en desarrollo." << endl;
-                        break;
-                    case 7:
-                        cout << "Funcionalidad de ver lista de citas pendientes en desarrollo." << endl;
-                        break;
-                    case 0:
-                        cout << "Volviendo al menu principal..." << endl;
-                        break;
-                    default: 
-                        cout << "¡ERROR!: Opcion invalida (0-7)" << endl;
-                        system("pause");
-                        break;
-                    }
+                        cout<<"\t\t╔════════════════════════════════════════╗"<<endl;
+                        cout<<"\t\t║            GESTION DE CITAS            ║"<<endl;
+                        cout<<"\t\t╠════════════════════════════════════════╣"<<endl;
+                        cout<<"\t\t║          SELECCIONE UNA OPCION         ║"<<endl;
+                        cout<<"\t\t╠════════════════════════════════════════╣"<<endl;
+                        cout<<"\t\t║  1. Agendar nueva cita                 ║"<<endl;
+                        cout<<"\t\t║  2. Suspender cita                     ║"<<endl;
+                        cout<<"\t\t║  3. Atender cita                       ║"<<endl;
+                        cout<<"\t\t║  4. Ver citas de un pacientes          ║"<<endl;
+                        cout<<"\t\t║  5. Ver citas de un doctor             ║"<<endl;
+                        cout<<"\t\t║  6. Ver citas de una fecha             ║"<<endl;       
+                        cout<<"\t\t║  7. Ver listar citas pendientes        ║"<<endl;
+                        cout<<"\t\t║  0. Volver al menu principal           ║"<<endl;
+                        cout<<"\t\t╚════════════════════════════════════════╝"<<endl;
+
+                            cin>>wOpcionMAC;
+
+                                switch(wOpcionMAC){
+                                    case 1:
+                                        cout << "Funcionalidad de agendar nueva cita en desarrollo." << endl;
+                                        system("pause");
+                                        break;
+                                    case 2:
+                                        cout << "Funcionalidad de suspender cita en desarrollo." << endl;
+                                        system("pause");
+                                        break;
+                                    case 3:
+                                        cout << "Funcionalidad de atender cita en desarrollo." << endl;
+                                        system("pause");
+                                        break;
+                                    case 4:
+                                        cout << "Funcionalidad de ver citas de un paciente en desarrollo." << endl;
+                                        system("pause");
+                                        break;
+                                    case 5:
+                                        cout << "Funcionalidad de ver citas de un doctor en desarrollo." << endl;
+                                        system("pause");
+                                        break;
+                                    case 6:
+                                        cout << "Funcionalidad de ver citas de una fecha en desarrollo." << endl;
+                                        system("pause");
+                                        break;
+                                    case 7:
+                                        cout << "Funcionalidad de ver lista de citas pendientes en desarrollo." << endl;
+                                        system("pause");
+                                        break;
+                                    case 0:
+                                        cout << "Volviendo al menu principal..." << endl;
+                                        system("pause");
+                                        break;
+                                    default: 
+                                        cout << "¡ERROR!: Opcion invalida (0-7)" << endl;
+                                        system("pause");
+                                        break;
+                                }
                 }while (wOpcionMAC != 0);
-            break;
-        case 4:
-            cout << "Saliendo del programa. ¡Hasta luego!" << endl;
-            break;
-        default:
-            cout << "¡ERROR!: Opcion invalida (1-4)" << endl;
-            system("pause");
-            break;
-    }
+                break;
+
+            case 4:
+                cout << "Saliendo del programa. ¡Hasta luego!" << endl;
+                system("pause");
+                break;
+            default:
+                cout << "¡ERROR!: Opcion invalida (1-4)" << endl;
+                system("pause");
+                break;
+        }
     }while(wOpcionIMP != 4);
 
     destruirHospital(hospital);

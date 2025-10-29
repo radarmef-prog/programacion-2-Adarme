@@ -27,6 +27,6 @@ El sistema se organiza en módulos funcionales:
 - Gestión dinámica de memoria con `new` y `delete`
 - Validación de entradas y control de errores
 
-🧠 Autor
+## 🧠 Autor
 Rubén Adarme 
 Estudiante de Ingeniería en Computación Universidad Rafael Urdaneta 📍 Venezuela

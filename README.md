@@ -1,10 +1,7 @@
-@@ -1,32 +1,46 @@
 # 🏥 Sistema de Gestión Hospitalaria en C++
-🏥 Sistema de Gestión Hospitalaria en C++ (Actualización)
 Este proyecto implementa un sistema modular en C++ para la gestión de pacientes, médicos y citas médicas en un entorno hospitalario. Fue desarrollado como parte de la formación en Ingeniería en Computación en la Universidad Rafael Urdaneta.
 
-Este proyecto implementa un sistema modular en C++ para la gestión de pacientes, doctores y citas médicas en un entorno hospitalario. Fue desarrollado como parte de la formación en Ingeniería en Computación en la Universidad Rafael Urdaneta.
-✅ Actualización reciente
+# ✅ Actualización reciente
 Se ha realizado una mejora significativa en el manejo de datos del sistema. En uno de los módulos principales, se eliminaron los arreglos dinámicos (new y delete) y se reemplazaron por estructuras basadas en archivos binarios. Esto garantiza que la información ingresada por el usuario se conserve entre ejecuciones del programa, evitando la pérdida de datos tras cada compilación.
 
 # 📌 Objetivos del sistema
